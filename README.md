@@ -1,1 +1,1 @@
-# lms
+# lms-apigateway-api-service

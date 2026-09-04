@@ -1,0 +1,4 @@
+com\learningplatform\apigateway\security\JwtUtil.class
+com\learningplatform\apigateway\ApigatewayApplication.class
+com\learningplatform\apigateway\security\JwtAuthFilter.class
+com\learningplatform\apigateway\HealthController.class

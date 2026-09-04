@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: apigateway
+  namespace: lms
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: apigateway
+
+  template:
+
+    metadata:
+      labels:
+        app: apigateway
+
+    spec:
+
+      containers:
+
+        - name: apigateway
+
+          image: REPLACE_ECR_IMAGE
+
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 8080
+
+          env:
+
+            - name: EUREKA_SERVER_URL
+
+              valueFrom:
+                configMapKeyRef:
+                  name: apigateway-config
+
+                  key: EUREKA_SERVER_URL
+
+          resources:
+
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+
+          readinessProbe:
+
+            httpGet:
+              path: /actuator/health
+              port: 8080
+
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+
+          livenessProbe:
+
+            httpGet:
+              path: /actuator/health
+              port: 8080
+
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3

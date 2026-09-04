@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: apigateway-config
+  namespace: lms
+
+data:
+  EUREKA_SERVER_URL: "http://eureka-server:8761/eureka/"
